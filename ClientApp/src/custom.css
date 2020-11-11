@@ -1,0 +1,55 @@
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #E01A76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.main-tile {
+    min-width: 150px;
+    height: 25%;
+    min-height: 250px;
+    margin: 2em;
+}
+
+@media only screen and (min-width: 1000px) {
+    .main-tile {
+        height: 67%;
+    }
+}
+
+.sub-tile {
+    min-height: 250px;
+    height: 33.333%;
+    margin: 2em;
+}
+
+@media only screen and (min-width: 1000px) {
+    .sub-tile {
+        width: 33.333%;
+        height: 100%;
+    }
+}
+
+.tiles {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    height: 75%;
+    width: 100%;
+}
+
+@media only screen and (min-width: 1000px) {
+    .tiles {
+        flex-direction: row;
+        height: 33%;
+    }
+}
