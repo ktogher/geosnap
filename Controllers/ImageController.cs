@@ -1,18 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
+using geosnap.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace geosnap.Controllers
 {
-    public class ImageController : Controller
+    [Produces("application/json")]
+    [EnableCors("ImagePolicy")]
+    public class ImageController : ControllerBase
     {
-        public IActionResult Index()
+        [HttpGet]
+        public ActionResult<Task<dynamic>> GetRandom()
         {
-            return View();
+            var result = ImageService.GetImageData();
+            return result;
         }
+
+        /*
+
+        public Task<object> Get()
+        {
+            var result = ImageService.GetImageData();
+            return result;
+        }
+        */
     }
 }

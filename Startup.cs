@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using geosnap.Data;
 using geosnap.Models;
+using geosnap.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -41,7 +42,12 @@ namespace geosnap
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+
             services.AddRazorPages();
 
             // In production, the React files will be served from this directory
@@ -49,6 +55,15 @@ namespace geosnap
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            //register ImageService + CORS policy
+            services.AddSingleton<ImageService>();
+            services.AddCors(o => o.AddPolicy("ImagePolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,10 +86,11 @@ namespace geosnap
             app.UseSpaStaticFiles();
 
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
+
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -92,6 +108,9 @@ namespace geosnap
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
+            //Enable Cors
+            app.UseCors("ImagePolicy");
         }
     }
 }
