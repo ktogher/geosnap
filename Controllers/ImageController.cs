@@ -15,17 +15,9 @@ namespace geosnap.Controllers
         [HttpGet]
         public ActionResult<Task<dynamic>> GetRandom()
         {
-            var result = ImageService.GetImageData();
+            string path = "photos/random";
+            var result = ImageService.GetImageData(path);
             return result;
         }
-
-        /*
-
-        public Task<object> Get()
-        {
-            var result = ImageService.GetImageData();
-            return result;
-        }
-        */
     }
 }
