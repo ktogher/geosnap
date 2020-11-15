@@ -1,35 +1,44 @@
 ﻿import React, { Component } from 'react';
-import { RANDOM_API_URL } from '../constants';
+import { RANDOM_API_URL, API_URL } from '../constants';
 
 class MainTile extends Component {
     
-    state = {
-        items: []
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            data: 'false',
+            image: 'https://via.placeholder.com/350'
+        };
     }
 
     componentDidMount() {
-        this.GetItems();
+        this.GetData();
     }
 
-    GetItems = () => {
-        let check = [null, null];
-        //while (check[0] == null && check[1] == null) {
-            fetch(RANDOM_API_URL)
+    GetData = () => {
+        let check = [];
+            fetch(API_URL)//fetch(RANDOM_API_URL)
                 .then(res => res.json())
-                .then(data => console.log(data.result.location))
-                .then(data => check[0] = data.result.location.position.latitude)
-                .then(data => check[1] = data.result.location.position.longitude)
-                .then(console.log(check))
-                .then(res => this.setState({ items: res }))
-                .catch(err => console.log(err));
-        //}
+                .then(json => {
+                    check.push(json.result.location.position.latitude, json.result.location.position.longitude)
+                    console.log(check);
+                    if (check[0] == null && check[1] == null) {
+                        this.GetData();
+                    }
+                    else {
+                        console.log(json.result.location);
+                        this.setState({ data: json.result })
+                        this.setState({ image: json.result.urls.small })
+                    }  
+                })
     }
     
     render() {
         return (
             <div
                 style={{
-                    backgroundColor: 'red',
+                    backgroundImage: 'url('+ this.state.image +')',
                 }}
                 className={'main-tile'}
             >

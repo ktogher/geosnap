@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json.Linq;
 
+using System.IO;
+
 namespace geosnap.Services
 {
     public class ImageService
@@ -24,6 +26,16 @@ namespace geosnap.Services
             var result = await response.Content.ReadAsStringAsync();
             var parsedJson = JObject.Parse(result);
             return parsedJson;
+        }
+
+        public static JObject TestData()
+        {
+            using (StreamReader r = new StreamReader("test.json"))
+            {
+                string json = r.ReadToEnd();
+                var items = JObject.Parse(json);
+                return items;
+            }
         }
     }
 }
