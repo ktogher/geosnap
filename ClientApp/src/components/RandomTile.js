@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { RANDOM_API_URL, API_URL } from '../constants';
 
-class MainTile extends Component {
+class RandomTile extends Component {
     
     constructor(props) {
         super(props);
@@ -29,7 +29,7 @@ class MainTile extends Component {
                     else {
                         console.log(json.result.location);
                         this.setState({ data: json.result })
-                        this.setState({ image: json.result.urls.small })
+                        this.setState({ image: json.result.urls.regular })
                     }  
                 })
     }
@@ -40,11 +40,11 @@ class MainTile extends Component {
                 style={{
                     backgroundImage: 'url('+ this.state.image +')',
                 }}
-                className={'main-tile'}
+                className={'main-tile bg-images'}
             >
             </div>
         );
     }
 }
 
-export default MainTile
+export default RandomTile

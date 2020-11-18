@@ -1,9 +1,8 @@
 ﻿import React, { Component } from 'react';
-import MainTile from './MainTile';
-import SubTile from './SubTile';
-//import SubTile from './SubTile';
+import { Link } from 'react-router-dom';
 
 class Tiles extends Component {
+
     render() {
         return (
             <div
@@ -14,7 +13,17 @@ class Tiles extends Component {
                     width: '100%',
                 }}
             >
-                <MainTile />
+                <Link
+                    to="/NewGame"
+                    id={'Main'}
+                    className={'main-tile'}
+                    style={{
+                        backgroundColor: 'red',
+                    }}
+                    onClick={this.StartNew}
+                >
+                </Link>
+
                 <div
                     className={'tiles'}
                     style={{
